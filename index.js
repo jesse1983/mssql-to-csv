@@ -23,8 +23,8 @@ module.exports = function (dbconfig, options) {
         .then(function () {
             options.log && console.log("Starting DB export from", dbconfig.database, "...");
             var exportPromise = options.tables.map(function (table) {
-                return util.exportTable(table.name, options.outputDirectory).then(function () {
-                    options.log && console.log(table.name + " CSV file exported!");
+                return util.exportTable(table.owner, table.name, options.outputDirectory).then(function () {
+                    options.log && console.log(table.owner + '.' + table.name + " CSV file exported!");
                 });
             });
             return Promise.all(exportPromise).then(function () {
